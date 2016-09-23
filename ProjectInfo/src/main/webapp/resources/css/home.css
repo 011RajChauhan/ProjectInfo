@@ -1,0 +1,16 @@
+h1{
+	color:red;
+}
+
+.form-group span{
+	display:block;
+}
+
+.form-group span input{
+ margin-right:7px;
+	}
+	
+.form-group span label{
+ position: relative;
+ top: -3px;
+}

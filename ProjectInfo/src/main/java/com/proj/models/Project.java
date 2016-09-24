@@ -2,14 +2,15 @@ package com.proj.models;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Min;
 
 public class Project {
 private int projectId;
 	
+	
 	private String name;
 	
-	@NotBlank
+	@Min(value=3,message="description is too short")
 	private String description;
 	
 	private Sponsor sponsor;

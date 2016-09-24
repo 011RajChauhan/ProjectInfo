@@ -1,13 +1,17 @@
 package com.proj.controllers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.proj.models.Project;
 import com.proj.services.ProjectServices;
+import com.proj.validators.ProjectValidator;
 
 @Controller
 @RequestMapping(value="/project")
@@ -24,6 +29,14 @@ public class CourseController {
 	
 	private List<String>type;
 	
+	/*validator entry for the Project model*/
+	
+	/*after applying validator request giving 400 bad request error*/
+	@InitBinder
+	 
+	public void initBinder(WebDataBinder binder){
+		binder.addValidators(new ProjectValidator());
+	}
 	@RequestMapping(value="{projectId}")
 	public String find(Model model,@PathVariable("projectId") int projectId){
 		System.out.println("invoking /project/{projectId} >>> find()");
@@ -54,8 +67,13 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String saveProject(@ModelAttribute Project project,Model model){
+	public String saveProject(@Valid @ModelAttribute Project project,BindingResult result,Model model){
 		System.out.println("invoking saveProject()");
+		if(!result.hasErrors()){
+			System.out.println("project validated successfully");
+		}else{
+			System.out.println("project cannot be validated");
+		}
 		System.out.println(project);
 		
 		/*System.out.println(request.getParameter("name"));

@@ -2,11 +2,14 @@ package com.proj.models;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Project {
 private int projectId;
 	
 	private String name;
 	
+	@NotBlank
 	private String description;
 	
 	private Sponsor sponsor;

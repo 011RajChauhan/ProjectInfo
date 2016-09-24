@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +59,16 @@ public class ResourceController {
 	}
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String resourcePage(Model model){
+		if(1==1){
+			throw new RuntimeException();
+		}
 		System.out.println("invoking add");
 		return "resource_add";
+	}
+	/*@ExceptinHandler controller for handling exeption for individual controller*/
+	@ExceptionHandler(Exception.class)
+	public String handleControllerException(HttpServletRequest request){
+		return "controller_exception";
 	}
 	@RequestMapping(value="/review")
 	public String reviewResource(@ModelAttribute Resource resource){

@@ -16,6 +16,6 @@ public class HomeController {
 		project.setSponsor(new Sponsor("HCL TECHNOLOGIES LTD.","WWW.HCLTECH.COM","HCL CARE"));
 		project.setDescription("This is a simple project sponsored by HCL");
 		model.addAttribute("currentProject",project);
-		return "home";
+		return "welcome";
 	}
 }

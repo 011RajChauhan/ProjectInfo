@@ -60,6 +60,9 @@ public class CourseController {
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String addProject(Model model){
 		//session.setAttribute("user","rajan");
+		if(1==1){
+			throw new NullPointerException();
+		}
 		System.out.println("invoking addProject()");
 		//model.addAttribute("type",type);
 		model.addAttribute("project",new Project());

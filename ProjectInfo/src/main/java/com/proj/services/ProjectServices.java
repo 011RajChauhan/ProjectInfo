@@ -47,4 +47,7 @@ List<Project> projects = new LinkedList<Project>();
 		}
 		return project;
 }
+	public void save(Project project){
+		projects.add(project);
+	}
 }

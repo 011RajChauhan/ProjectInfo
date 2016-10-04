@@ -6,11 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.XmlViewResolver;
 
+import com.proj.interceptors.GlobalInterceptor;
 import com.proj.services.ProjectServices;
 
 @Configuration
@@ -32,6 +34,14 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
+	
+	//Interceptor entry
+	
+	@Override
+	public  void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new GlobalInterceptor())
+		.addPathPatterns("/project/**");
+	}
 	
 	@Bean
 	public ProjectServices projectService(){

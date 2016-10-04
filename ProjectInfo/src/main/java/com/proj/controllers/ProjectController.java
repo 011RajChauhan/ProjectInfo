@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.models.Project;
 import com.proj.services.ProjectServices;
@@ -23,7 +24,7 @@ import com.proj.validators.ProjectValidator;
 
 @Controller
 @RequestMapping(value="/project")
-public class CourseController {
+public class ProjectController {
 	@Autowired
 	private ProjectServices projectServices;
 	
@@ -31,7 +32,9 @@ public class CourseController {
 	
 	/*validator entry for the Project model*/
 	
-	/*after applying validator request giving 400 bad request error*/
+	/*after applying validator request giving 400 bad request error, error resolved
+	 * as it was happening because @ModelAttribute needs to be placed just after 
+	 * @Valid annotation*/
 	@InitBinder
 	 
 	public void initBinder(WebDataBinder binder){
@@ -60,9 +63,9 @@ public class CourseController {
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String addProject(Model model){
 		//session.setAttribute("user","rajan");
-		if(1==1){
+		/*if(1==1){
 			throw new NullPointerException();
-		}
+		}*/
 		System.out.println("invoking addProject()");
 		//model.addAttribute("type",type);
 		model.addAttribute("project",new Project());
@@ -70,7 +73,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String saveProject(@Valid @ModelAttribute Project project,BindingResult result,Model model){
+	public String saveProject(@Valid @ModelAttribute Project project,BindingResult result,Model model,RedirectAttributes redrctAttribute){
 		System.out.println("invoking saveProject()");
 		if(!result.hasErrors()){
 			System.out.println("project validated successfully");
@@ -81,7 +84,11 @@ public class CourseController {
 		
 		/*System.out.println(request.getParameter("name"));
 		System.out.println(session.getAttribute("user"));*/
-		return "project_add";
+		project.setProjectId(00002);
+		this.projectServices.save(project);
+		redrctAttribute.addAttribute("projectId",project.getProjectId());
+		//redrctAttribute.addFlashAttribute("project",project);
+		return "redirect:/";
 	}
 	
 	/*commenting demo methods of saving project, which executes based

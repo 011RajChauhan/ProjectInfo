@@ -46,7 +46,8 @@
 				</ul>
 				
 			</li>
-			
+			<li>${currentTime}</li>
 			</ul>
+			
 	</div>
 </nav>

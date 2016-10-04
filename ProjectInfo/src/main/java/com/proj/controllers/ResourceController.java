@@ -20,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.proj.models.Resource;
 
 @Controller
+//use of SessionAttributes annotation to set object in session
 @SessionAttributes("resource")
 @RequestMapping(value="/resource")
 public class ResourceController {
@@ -59,9 +60,9 @@ public class ResourceController {
 	}
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String resourcePage(Model model){
-		if(1==1){
+		/*if(1==1){
 			throw new RuntimeException();
-		}
+		}*/
 		System.out.println("invoking add");
 		return "resource_add";
 	}
@@ -89,6 +90,7 @@ public class ResourceController {
 	public String resourceadd(@ModelAttribute Resource resource,SessionStatus status){
 		System.out.println("invoking save");
 		System.out.println(resource);
+		//use of setcomplete method to pop up session object stored via @SessionAttribute annotation
 		status.setComplete();
 		return "redirect:/resource/add";
 	}
